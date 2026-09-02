@@ -1,0 +1,20 @@
+HAPUS 3 FILE INI DARI REPO-MU (patch zip hanya menambah/menimpa, tidak bisa
+menghapus otomatis):
+
+1. lib/store.ts
+   → sudah 100% digantikan lib/supabase/profile-store.ts
+
+2. app/api/auth/login/route.ts
+   → hapus juga folder app/api/auth/login/ (dan app/api/auth/ jika sudah
+     kosong). Login email manual sudah digantikan Google OAuth
+     (app/auth/callback/route.ts).
+
+3. middleware.ts (di root project)
+   → sudah di-rename jadi proxy.ts (isinya beda dikit: nama fungsi
+     `middleware` → `proxy`, ini konvensi baru Next.js 16). File proxy.ts
+     yang baru sudah ada di patch ini — middleware.ts yang lama WAJIB
+     dihapus, jangan dibiarkan dobel.
+
+Setelah hapus 3 file di atas, timpa/tambahkan seluruh isi patch ini ke repo,
+lalu jangan lupa jalankan `npm install` ulang (ada 2 dependency baru:
+@supabase/ssr, @supabase/supabase-js) sebelum push ke GitHub.
