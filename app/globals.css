@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+/* ───────────────────────────────────────────────────────────────
+   XEAN DIGITAL — Neobrutalism abstrak
+   Aturan: border hitam tebal, bayangan keras tanpa blur, sudut
+   siku, warna datar jenuh, bentuk geometri abstrak sebagai latar.
+   ─────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: var(--font-bricolage), var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+}
+
+@theme {
+  /* Palet — semua warna aksen cukup terang untuk teks hitam (kontras ≥ 6:1) */
+  --color-ink: #000000;
+  --color-paper: #f1edff;
+  --color-iris: #8e7cff;
+  --color-volt: #b4ff39;
+  --color-sky: #4fd8ff;
+  --color-pink: #ff8ad8;
+  --color-sun: #ffd84d;
+  --color-alert: #ff6b6b;
+
+  /* Warna teks aksen di atas putih/paper (kontras ≥ 4.5:1) */
+  --color-irisdeep: #4527e0;
+  --color-forest: #08733a;
+  --color-ocean: #006c8f;
+  --color-amber: #8f5200;
+  --color-danger: #c20017;
+
+  /* Tint latar lembut */
+  --color-blush: #ffe3e3;
+  --color-mint: #e6ffc7;
+  --color-butter: #fff3bf;
+  --color-lilac: #e4deff;
+
+  /* Sudut siku di mana-mana (rounded-full tetap untuk lingkaran) */
+  --radius-xs: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-4xl: 0;
+
+  /* Bayangan keras: offset tanpa blur */
+  --shadow-2xs: 1px 1px 0 0 #000;
+  --shadow-xs: 2px 2px 0 0 #000;
+  --shadow-sm: 3px 3px 0 0 #000;
+  --shadow-md: 4px 4px 0 0 #000;
+  --shadow-lg: 6px 6px 0 0 #000;
+  --shadow-xl: 8px 8px 0 0 #000;
+  --shadow-2xl: 10px 10px 0 0 #000;
+}
+
+@layer base {
+  * {
+    border-color: #000;
+  }
+
+  html,
+  body {
+    /* Cegah elemen mana pun mendorong viewport melebar di mobile. */
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    /* Grid titik halus sebagai tekstur kertas */
+    background-image: radial-gradient(rgba(0, 0, 0, 0.16) 1.2px, transparent 1.4px);
+    background-size: 22px 22px;
+    color: #000;
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: #000;
+  }
+
+  /* Scrollbar tebal bergaya brutal */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-paper);
+    border-left: 2px solid #000;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-iris);
+    border: 2px solid #000;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-volt);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    border-radius: 0;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* Heading display: Bricolage Grotesque tebal, tidak pernah miring.
+   Ditulis di luar @layer agar menang atas utilitas `italic` lama. */
+.font-serif {
+  font-family: var(--font-display);
+  font-style: normal !important;
+  letter-spacing: -0.035em;
+}
+
+/* Fokus keyboard yang terlihat jelas */
+:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--color-volt);
+}
+
+/* Efek "ditekan": tombol masuk ke bayangannya */
+button,
+a {
+  transition: transform 90ms ease, box-shadow 90ms ease, background-color 120ms ease, color 120ms ease;
+}
+button:not(:disabled):active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 #000 !important;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Kelas lama dipertahankan agar TSX tidak perlu diubah */
+.sophisticated-card {
+  background-color: #fff;
+  border: 2px solid #000;
+  box-shadow: 6px 6px 0 0 #000;
+}
+.sophisticated-surface {
+  background-color: var(--color-paper);
+  border: 2px solid #000;
+}
+.sophisticated-glow {
+  display: none;
+}
+
+/* Utilitas abstrak */
+.nb-stripes {
+  background-image: repeating-linear-gradient(135deg, #000 0 3px, transparent 3px 11px);
+}
+.nb-dots {
+  background-image: radial-gradient(#000 2px, transparent 2.5px);
+  background-size: 14px 14px;
+}
+.nb-grid {
+  background-image:
+    linear-gradient(#000 2px, transparent 2px),
+    linear-gradient(90deg, #000 2px, transparent 2px);
+  background-size: 28px 28px;
+}
+
+@keyframes nb-drift {
+  0%, 100% { transform: translate(0, 0) rotate(var(--r, 0deg)); }
+  50% { transform: translate(var(--dx, 0px), var(--dy, -14px)) rotate(calc(var(--r, 0deg) + 6deg)); }
+}
+@keyframes nb-spin {
+  to { transform: rotate(360deg); }
+}
+.nb-drift {
+  animation: nb-drift 9s ease-in-out infinite;
+}
+.nb-spin-slow {
+  animation: nb-spin 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nb-drift,
+  .nb-spin-slow,
+  .animate-pulse,
+  .animate-spin {
+    animation: none !important;
+  }
+  button:not(:disabled):active {
+    transform: none;
+  }
+}
+
+/* Input dengan `focus:outline-none` tetap punya indikator fokus yang jelas */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid #000 !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--color-volt);
+}
